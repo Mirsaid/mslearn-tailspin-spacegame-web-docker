@@ -6,10 +6,9 @@ variables:
   webRepository: 'web'
   tag: '$(Build.BuildId)'
 
-stages:
 - stage: 'Build'
   displayName: 'Build and push'
-  jobs: 
+  jobs:  
   - job: 'Build'
     displayName: 'Build job'
     pool:
@@ -21,13 +20,10 @@ stages:
         command: buildAndPush
         buildContext: $(Build.Repository.LocalPath)
         repository: $(webRepository)
-        Dockerfile: '$(Build.SourceDirectory)/Tailspin.Spacegame.Web/Dockerfile'
+        dockerfile: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/Dockerfile'
         containerRegistry: 'Container Registry Connection'
         tags: |
-           $(tag)
-       
-
-
+          $(tag)
 - stage: 'Deploy'
   displayName: 'Deploy the container'
   dependsOn: Build
